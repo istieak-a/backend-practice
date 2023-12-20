@@ -4,17 +4,13 @@ const mongoose = require('mongoose');
 const app = express();
 const connectDB = require('./db/index.js');
 
-connectDB();
+connectDB()
+.then( () => {
+    app.listen(process.env.PORT || 8000, () => {
+        console.log("Server is running on port: ", process.env.PORT); 
+    })
+})
+.then((err) => {
+    console.log("MONGODB connection error: ", err);
+})
 
-
-
-
-
-
-app.listen(process.env.PORT, () => {
-    app.get('/', (req, res) => {
-        res.send('Hello World!');
-    });
-
-    console.log(`Server running on port ${process.env.PORT}`);
-});
